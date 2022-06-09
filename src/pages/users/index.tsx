@@ -23,11 +23,13 @@ import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
 
-import { RiAddLine, RiPencilLine } from "react-icons/ri";
-import { VscDebugRestart } from "react-icons/vsc";
+import { RiAddLine } from "react-icons/ri";
+import { useState } from "react";
 
 export default function UserList() {
-  const { data, isLoading, isFetching, error, refetch } = useUsers();
+  const [page, setPage] = useState(1);
+
+  const { data, isLoading, isFetching, error, refetch } = useUsers(page);
 
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -49,27 +51,16 @@ export default function UserList() {
               )}
             </Heading>
 
-            <Flex justify='space-between' align='center'>
-              <Icon
-                as={VscDebugRestart}
-                fontSize='20'
-                mr='4'
-                colorSchema='gray.500'
-                _hover={{ cursor: "pointer", opacity: 0.3 }}
-                onClick={refetch}
-              />
-
-              <Link href='/users/create' passHref>
-                <Button
-                  as='a'
-                  size='sm'
-                  fontSize='sm'
-                  colorScheme='pink'
-                  leftIcon={<Icon as={RiAddLine} fontSize='20' />}>
-                  Criar novo
-                </Button>
-              </Link>
-            </Flex>
+            <Link href='/users/create' passHref>
+              <Button
+                as='a'
+                size='sm'
+                fontSize='sm'
+                colorScheme='pink'
+                leftIcon={<Icon as={RiAddLine} fontSize='20' />}>
+                Criar novo
+              </Button>
+            </Link>
           </Flex>
 
           {isLoading ? (
@@ -92,44 +83,32 @@ export default function UserList() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {data.map((user) => {
+                  {data.users.map((user) => {
                     return (
-                      <>
-                        <Tr key={user.id}>
-                          <Td px={["4", "4", "6"]}>
-                            <Checkbox colorScheme='pink' />
-                          </Td>
-                          <Td>
-                            <Box>
-                              <Text fontWeight='bold'>{user.name}</Text>
-                              <Text fontSize='sm' color='gray.300'>
-                                {user.email}
-                              </Text>
-                            </Box>
-                          </Td>
-                          {isWideVersion && <Td>{user.createdAt}</Td>}
-                          {isWideVersion && (
-                            <Td>
-                              <Button
-                                as='a'
-                                size='sm'
-                                fontSize='sm'
-                                colorScheme='purple'
-                                leftIcon={
-                                  <Icon as={RiPencilLine} fontSize='16' />
-                                }>
-                                Editar
-                              </Button>
-                            </Td>
-                          )}
-                        </Tr>
-                      </>
+                      <Tr key={user.id}>
+                        <Td px={["4", "4", "6"]}>
+                          <Checkbox colorScheme='pink' />
+                        </Td>
+                        <Td>
+                          <Box>
+                            <Text fontWeight='bold'>{user.name}</Text>
+                            <Text fontSize='sm' color='gray.300'>
+                              {user.email}
+                            </Text>
+                          </Box>
+                        </Td>
+                        {isWideVersion && <Td>{user.createdAt}</Td>}
+                      </Tr>
                     );
                   })}
                 </Tbody>
               </Table>
 
-              <Pagination />
+              <Pagination
+                totalCountOfRegisters={data.totalCount}
+                currentPage={page}
+                onPageChange={setPage}
+              />
             </>
           )}
         </Box>
