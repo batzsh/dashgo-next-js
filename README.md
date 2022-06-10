@@ -9,9 +9,7 @@
 
 <div align="center">
 
-![logo](./public/logo.png)
-
-# Admin Dashboard - dashgo
+# dashgo.
 
 [![repo][repo-badge]][repo]
 [![repo][language-badge]][repo]
@@ -28,7 +26,7 @@ consists in learn and improve Chakra UI interfaces implementations.
 [License](#-license) •
 [Open in Vercel 🔼][vercel]
 
-[![screen](./public/screen.gif)][vercel]
+[![Preview](./Preview.gif)][vercel]
 
 </div>
 

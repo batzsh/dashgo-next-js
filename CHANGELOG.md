@@ -27,6 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Redirect to dashboard after login
 - Remove react query devtools
 - Apex Charts options typing
+- Faker version
+- Axios API to call Vercel URL
 
 ## [0.2.0] - 2022-06-07
 
